@@ -31,7 +31,7 @@ namespace Water.Graphics.Screens
 
         public override void Initialize()
         {
-
+            RelativePosition = Game.GraphicsDevice.Viewport.Bounds;
         }
 
         public void ChangeScreen(Screen screen)

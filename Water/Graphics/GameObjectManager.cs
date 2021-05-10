@@ -10,6 +10,7 @@ namespace Water.Graphics
     {
         public List<GameObject> AllObjects { get; private set; } = new();
         public GraphicsDevice GraphicsDevice { get; }
+        public TextureCache Textures { get; private set; }
         public float GameSpeed { get; set; } = 100f;
 
         private readonly List<GameObject> objectsToAdd = new();
@@ -18,6 +19,7 @@ namespace Water.Graphics
         public GameObjectManager(GraphicsDevice graphicsDevice)
         {
             GraphicsDevice = graphicsDevice;
+            Textures = new TextureCache(graphicsDevice);
         }
 
         public void AddObject(GameObject obj)

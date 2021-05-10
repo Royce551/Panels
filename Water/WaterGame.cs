@@ -9,7 +9,7 @@ namespace Water
 {
     public class WaterGame : Game
     {
-        public GameObjectScreen ScreenManager { get; private set; } = new();
+        public GameObjectScreen Screen { get; private set; } = new();
         public virtual string ProjectName { get; }
 
         private GraphicsDeviceManager _graphics;
@@ -25,17 +25,23 @@ namespace Water
             _graphics.PreferredBackBufferWidth = 1600;
             _graphics.PreferredBackBufferHeight = 900;
             _graphics.SynchronizeWithVerticalRetrace = false;
+            Window.AllowUserResizing = true;
+            _graphics.ApplyChanges();
+
             IsFixedTimeStep = true;
             TargetElapsedTime = TimeSpan.FromMilliseconds(8.33);
-            _graphics.ApplyChanges();
+            
+
             gameObjectManager = new(GraphicsDevice);
+            Screen.ChangeScreen(new DefaultScreen());
+            gameObjectManager.AddObject(Screen);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
-            gameObjectManager.AddObject(ScreenManager);
+            
             base.Initialize();
         }
 
