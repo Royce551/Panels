@@ -13,7 +13,28 @@ namespace Water.Graphics
         public Rectangle RelativePosition { get; set; }
 
         public IContainer Parent { get; set; }
+        public Layout Layout { get; set; }
+        public int Margin { get; set; }
 
         public void AddChild(IContainer child);
+        public Rectangle CalculateLayout();
+    }
+    public enum Layout
+    {
+        Manual,
+        AnchorLeft,
+        AnchorTopLeft,
+        AnchorTop,
+        AnchorTopRight,
+        AnchorRight,
+        AnchorBottomRight,
+        AnchorBottom,
+        AnchorBottomLeft,
+        Center,
+        DockLeft,
+        DockTop,
+        DockRight,
+        DockBottom,
+        Fill
     }
 }

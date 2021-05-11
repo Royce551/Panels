@@ -12,12 +12,21 @@ namespace Panels
 
         public PanelGame() : base()
         {
-            var obj = new Sprite(new(100, 0, 500, 500), "Assets/Gameplay/Player.png");
+            var obj = new Sprite(new(100, 0, 250, 250), "Assets/Gameplay/Player.png");
+            obj.Layout = Layout.Fill;
+            obj.Margin = 10;
             Screen.Game.AddObject(obj);
             Screen.AddChild(obj);
-            var obj2 = new Sprite(new(10, 10, 200, 200), "Assets/Gameplay/Enemy.png");
+            var obj2 = new Sprite(new(10, 50, 50, 50), "Assets/Gameplay/Enemy.png");
+            obj2.Layout = Layout.Center;
+            obj2.Margin = 10;
             Screen.Game.AddObject(obj2);
             obj.AddChild(obj2);
+            var obj3 = new Sprite(new(10, 10, 256, 144), "Assets/[ Pink Dreams ].png");
+            obj3.Layout = Layout.DockBottom;
+            obj3.Margin = 10;
+            Screen.Game.AddObject(obj3);
+            obj.AddChild(obj3);
         }
 
         protected override void Initialize()

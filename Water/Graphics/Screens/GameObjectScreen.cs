@@ -51,6 +51,6 @@ namespace Water.Graphics.Screens
             Screens.Peek().Draw(gameTime, spriteBatch, graphicsDevice);
         }
 
-        
+        public void UpdateScreenSize(Rectangle newSize) => RelativePosition = newSize;
     }
 }
