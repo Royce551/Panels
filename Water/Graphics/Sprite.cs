@@ -21,12 +21,12 @@ namespace Water.Graphics
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
-            spriteBatch.Draw(Game.Textures.GetTexture(path), ActualPosition, Color.White);
+            spriteBatch.Draw(sprite, ActualPosition, Color.White);
         }
 
         public override void Initialize()
         {
-
+            sprite = Game.Textures.GetTexture(path);
         }
 
         public override void Update(GameTime gameTime)

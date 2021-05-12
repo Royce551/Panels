@@ -23,12 +23,18 @@ namespace Water.Graphics
         public Layout Layout { get; set; } = Layout.Manual;
         public int Margin { get; set; } = 0;
 
+        public List<IContainer> Children { get; } = new();
+
         public abstract void Initialize();
 
         public abstract void Update(GameTime gameTime);
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice);
 
-        public void AddChild(IContainer child) => child.Parent = this;
+        public void AddChild(IContainer child)
+        {
+            child.Parent = this;
+            Children.Add(child);
+        }
 
         public Rectangle CalculateLayout() => Layout switch
         {
