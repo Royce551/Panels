@@ -29,9 +29,15 @@ namespace Water.Graphics.Screens
 
         }
 
+        //public override void AddChild(IContainer child)  // TODO: figure out how to get this working
+        //{
+        //    base.AddChild(child);
+        //    CalculateChildrenPositions();
+        //}
+
         public override void Initialize()
         {
-            RelativePosition = Game.GraphicsDevice.Viewport.Bounds;
+
         }
 
         public void ChangeScreen(Screen screen)
@@ -44,6 +50,7 @@ namespace Water.Graphics.Screens
         {
             if (!HasScreens) return;
             Screens.Peek().Update(gameTime);
+            CalculateChildrenPositions();
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
@@ -51,6 +58,12 @@ namespace Water.Graphics.Screens
             Screens.Peek().Draw(gameTime, spriteBatch, graphicsDevice);
         }
 
-        public void UpdateScreenSize(Rectangle newSize) => RelativePosition = newSize;
+        public void UpdateScreenSize(Rectangle newSize)
+        {
+            ActualPosition = newSize;
+            RelativePosition = newSize;
+            foreach (var child in Children)
+                child.CalculateChildrenPositions();
+        }
     }
 }

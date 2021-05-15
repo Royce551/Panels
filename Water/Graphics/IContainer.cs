@@ -9,7 +9,7 @@ namespace Water.Graphics
 {
     public interface IContainer
     {
-        public Rectangle ActualPosition { get; }
+        public Rectangle ActualPosition { get; set; }
         public Rectangle RelativePosition { get; set; }
 
         public IContainer Parent { get; set; }
@@ -17,8 +17,7 @@ namespace Water.Graphics
         public Layout Layout { get; set; }
         public int Margin { get; set; }
 
-        public void AddChild(IContainer child);
-        public Rectangle CalculateLayout();
+        public void CalculateChildrenPositions();
     }
     public enum Layout
     {

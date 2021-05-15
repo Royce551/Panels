@@ -9,11 +9,17 @@ using Water.Graphics;
 
 namespace Water.Containers
 {
-    public class GridContainer : GameObject
+    public class GridContainer : Container
     {
-        public IContainer[,] Children { get; set; } = new IContainer[5, 5];
+        public new IContainer[,] Children { get; set; }
 
-        public override Rectangle CalculateLayout()
+        public void AddChild(IContainer child, int x, int y)
+        {
+            child.Parent = this;
+            Children[x, y] = child;
+        }
+
+        public override void CalculateChildrenPositions()
         {
             var currentX = 0;
             var currentY = 0;
@@ -21,28 +27,15 @@ namespace Water.Containers
             {
                 for (int y = 0; y < Children.GetLength(1); y++)
                 {
-                    Children[x, y].RelativePosition = new(currentX, currentY, Children[x, y].RelativePosition.Width, Children[x, y].RelativePosition.Height);
-                    currentX += Children[x, y].RelativePosition.Width;
-                    currentY += Children[x, y].RelativePosition.Height;
+                    var child = Children[x, y];
+                    var newX = child.RelativePosition.Width * x;
+                    var newY = child.RelativePosition.Width * y;
+                    child.ActualPosition = new(newX, newY, child.RelativePosition.Width, child.RelativePosition.Height);
+                    currentX += child.RelativePosition.Width;
+                    currentY += child.RelativePosition.Height;
+                    child.CalculateChildrenPositions();
                 }
             }
-
-            return base.CalculateLayout();
-        }
-
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
-        {
-           
-        }
-
-        public override void Initialize()
-        {
-           
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            CalculateLayout();
         }
     }
 }

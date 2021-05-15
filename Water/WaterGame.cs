@@ -36,6 +36,7 @@ namespace Water
             gameObjectManager = new(GraphicsDevice);
             Screen.ChangeScreen(new DefaultScreen());
             gameObjectManager.AddObject(Screen);
+            Screen.UpdateScreenSize(new(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height));
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
         }
@@ -73,7 +74,7 @@ namespace Water
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
