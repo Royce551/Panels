@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,10 @@ namespace Water.Graphics
         {
             foreach (var child in Children)
             {
-                var parentPosition = Parent?.ActualPosition ?? child.RelativePosition; // can be null for the root object
+                if (child is Sprite x)
+                    if (x.Tag == "Object 1")
+                        Console.WriteLine("it's true!");
+                var parentPosition = Parent?.ActualPosition ?? RelativePosition; // can be null for the root object
                 child.ActualPosition = child.Layout switch
                 {
                     Layout.AnchorLeft => new

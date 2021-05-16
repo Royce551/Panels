@@ -10,7 +10,7 @@ namespace Water.Graphics
 {
     public class Sprite : GameObject
     {
-
+        public string Tag { get; set; } = "Not tagged";
         private Texture2D sprite;
         private readonly string path;
         public Sprite(Rectangle relativePosition, string path)

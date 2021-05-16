@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Water.Graphics;
 using Water.Graphics.Screens;
 
@@ -68,7 +70,20 @@ namespace Water
             gameObjectManager.Update(gameTime);
             updatesPerSecond = 1 / gameTime.ElapsedGameTime.TotalSeconds;
             Window.Title = $"{gameObjectManager.AllObjects.Count} objects | {Math.Round(updatesPerSecond, 3)}updates ps | {Math.Round(drawsPerSecond, 3)}draws ps - Water Engine running {ProjectName ?? "itself"}";
-
+            var intersections = new List<string>();
+            foreach (var obj in gameObjectManager.AllObjects)
+            {
+                if (new Rectangle(Mouse.GetState().Position, new(50, 50)).Intersects(obj.ActualPosition))
+                {
+                    intersections.Add($"A:{obj.ActualPosition}, R:{obj.RelativePosition}, P:{obj.Parent}, T:{(obj as Sprite)?.Tag ?? "Not a sprite"}");
+                }
+            }
+            if (intersections.Count > 0)
+            {
+                Debug.WriteLine("---");
+                Debug.WriteLine(string.Join('\n', intersections));
+                Debug.WriteLine("---");
+            }
             base.Update(gameTime);
         }
 
