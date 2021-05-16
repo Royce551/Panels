@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Water.Graphics;
 
-namespace Water.Containers
+namespace Water.Graphics.Containers
 {
     public class StackContainer : Container
     {
