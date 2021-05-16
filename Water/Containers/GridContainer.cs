@@ -31,7 +31,7 @@ namespace Water.Containers
                     var child = Children[x, y];
                     var newX = itemWidth * x;
                     var newY = itemHeight * y;
-                    child.ActualPosition = new(Parent.ActualPosition.X + newX, Parent.ActualPosition.Y + newY, itemWidth, itemHeight);
+                    child.ActualPosition = new(ActualPosition.X + newX, ActualPosition.Y + newY, itemWidth, itemHeight);
                     child.CalculateChildrenPositions();
                 }
             }

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Water.Graphics.Screens;
 
 namespace Water.Graphics
 {
@@ -29,74 +30,74 @@ namespace Water.Graphics
         {
             foreach (var child in Children)
             {
-                if (child is Sprite x)
-                    if (x.Tag == "Object 1")
+                
+                if (this is GameObjectScreen)
                         Console.WriteLine("it's true!");
-                var parentPosition = Parent?.ActualPosition ?? RelativePosition; // can be null for the root object
-                child.ActualPosition = child.Layout switch
+                var parentPosition = child.Parent?.ActualPosition ?? RelativePosition; // can be null for the root object
+                Rectangle tempForDebugging = child.Layout switch
                 {
                     Layout.AnchorLeft => new
                     (
                         parentPosition.X + child.Margin,
                         parentPosition.Y + ((parentPosition.Height - child.RelativePosition.Height) / 2),
-                        RelativePosition.Width,
-                        RelativePosition.Height
+                        child.RelativePosition.Width,
+                        child.RelativePosition.Height
                     ),
                     Layout.AnchorTopLeft => new
                     (
                         parentPosition.X + child.Margin,
                         parentPosition.Y + child.Margin,
-                        RelativePosition.Width,
-                        RelativePosition.Height
+                        child.RelativePosition.Width,
+                        child.RelativePosition.Height
                     ),
                     Layout.AnchorTop => new
                     (
                         parentPosition.X + ((parentPosition.Width - child.RelativePosition.Width) / 2),
                         parentPosition.Y + child.Margin,
-                        RelativePosition.Width,
-                        RelativePosition.Height
+                        child.RelativePosition.Width,
+                        child.RelativePosition.Height
                     ),
                     Layout.AnchorTopRight => new
                     (
-                        parentPosition.Right - RelativePosition.Width - child.Margin,
+                        parentPosition.Right - child.RelativePosition.Width - child.Margin,
                         parentPosition.Y + child.Margin,
-                        RelativePosition.Width,
-                        RelativePosition.Height
+                        child.RelativePosition.Width,
+                        child.RelativePosition.Height
                     ),
                     Layout.AnchorRight => new
                     (
-                        parentPosition.Right - RelativePosition.Width - child.Margin,
-                        parentPosition.Y + ((parentPosition.Height - RelativePosition.Height) / 2),
-                        RelativePosition.Width,
-                        RelativePosition.Height
+                        parentPosition.Right - child.RelativePosition.Width - child.Margin,
+                        parentPosition.Y + ((parentPosition.Height - child.RelativePosition.Height) / 2),
+                        child.RelativePosition.Width,
+                        child.RelativePosition.Height
                     ),
                     Layout.AnchorBottomRight => new
                     (
-                        parentPosition.Right - RelativePosition.Width - child.Margin,
-                        parentPosition.Bottom - RelativePosition.Height - child.Margin,
-                        RelativePosition.Width,
-                        RelativePosition.Height
+                        parentPosition.Right - child.RelativePosition.Width - child.Margin,
+                        parentPosition.Bottom - child.RelativePosition.Height - child.Margin,
+                        child.RelativePosition.Width,
+                        child.RelativePosition.Height
                     ),
                     Layout.AnchorBottom => new
                     (
-                        parentPosition.X + ((parentPosition.Width - RelativePosition.Width) / 2),
-                        parentPosition.Bottom - RelativePosition.Height - child.Margin,
-                        RelativePosition.Width,
-                        RelativePosition.Height
+                        parentPosition.X + ((parentPosition.Width - child.RelativePosition.Width) / 2),
+                        parentPosition.Bottom - child.RelativePosition.Height - child.Margin,
+                        child.RelativePosition.Width,
+                        child.RelativePosition.Height
                     ),
                     Layout.AnchorBottomLeft => new
                     (
                         parentPosition.X + child.Margin,
-                        parentPosition.Bottom - RelativePosition.Height - child.Margin,
-                        RelativePosition.Width,
-                        RelativePosition.Height
+                        parentPosition.Bottom - child.RelativePosition.Height - child.Margin,
+                        child.RelativePosition.Width,
+                        child.RelativePosition.Height
                     ),
                     Layout.Center => new
                     (
-                        parentPosition.X + ((parentPosition.Width - RelativePosition.Width) / 2),
-                        parentPosition.Y + ((parentPosition.Height - RelativePosition.Height) / 2),
-                        RelativePosition.Width,
-                        RelativePosition.Height
+                        parentPosition.X + ((parentPosition.Width - child.RelativePosition.Width) / 2),
+                        parentPosition.Y + ((parentPosition.Height - child.RelativePosition.Height) / 2),
+                        child.RelativePosition.Width,
+                        child.RelativePosition.Height
                     ),
                     Layout.Fill => new
                     (
@@ -109,7 +110,7 @@ namespace Water.Graphics
                     (
                         parentPosition.X + child.Margin,
                         parentPosition.Y + child.Margin,
-                        RelativePosition.Width,
+                        child.RelativePosition.Width,
                         parentPosition.Height - (child.Margin * 2)
                     ),
                     Layout.DockTop => new
@@ -117,31 +118,32 @@ namespace Water.Graphics
                         parentPosition.X + child.Margin,
                         parentPosition.Y + child.Margin,
                         parentPosition.Width - (child.Margin * 2),
-                        RelativePosition.Height
+                        child.RelativePosition.Height
                     ),
                     Layout.DockRight => new
                     (
-                        parentPosition.Right - RelativePosition.Width - child.Margin,
+                        parentPosition.Right - child.RelativePosition.Width - child.Margin,
                         parentPosition.Y + child.Margin,
-                        RelativePosition.Width,
+                        child.RelativePosition.Width,
                         parentPosition.Height - (child.Margin * 2)
                     ),
                     Layout.DockBottom => new
                     (
                         parentPosition.X + child.Margin,
-                        parentPosition.Bottom - RelativePosition.Height - child.Margin,
+                        parentPosition.Bottom - child.RelativePosition.Height - child.Margin,
                         parentPosition.Width - (child.Margin * 2),
-                        RelativePosition.Height
+                        child.RelativePosition.Height
                     ),
                     Layout.Manual or _ => new
                     (
-                        parentPosition.X + RelativePosition.X,
-                        parentPosition.Y + RelativePosition.Y,
-                        RelativePosition.Width,
-                        RelativePosition.Height
+                        parentPosition.X + child.RelativePosition.X,
+                        parentPosition.Y + child.RelativePosition.Y,
+                        child.RelativePosition.Width,
+                        child.RelativePosition.Height
                     )
 
                 };
+                child.ActualPosition = tempForDebugging;
                 child.CalculateChildrenPositions();
             }
         } 

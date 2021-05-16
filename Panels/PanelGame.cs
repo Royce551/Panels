@@ -27,15 +27,15 @@ namespace Panels
             obj.AddChild(obj2);
             var obj3 = new Sprite(new(10, 10, 256, 144), "Assets/[ Pink Dreams ].png");
             obj3.Tag = "Object 3";
-            obj3.Layout = Layout.Center;
+            obj3.Layout = Layout.DockBottom;
             obj3.Margin = 10;
             Screen.Game.AddObject(obj3);
             obj.AddChild(obj3);
 
             var container = new GridContainer();
             container.RelativePosition = new(0, 0, 100, 100);
-            container.Layout = Layout.Fill;
-            obj2.AddChild(container);
+            container.Layout = Layout.Center;
+            obj3.AddChild(container);
             container.Children = new IContainer[5, 5];
             for (int i = 0; i <= 4; i++)
             {
@@ -44,10 +44,11 @@ namespace Panels
                     var obj4 = new Sprite(new(100, 0, 250, 250), @"C:\Users\poohw\OneDrive\Assets\blobsadcat.png");
                     obj4.Tag = $"Object 4 {i},{y}";
                     obj4.Layout = Layout.Fill;
-                    obj4.Margin = 10;
+                    obj4.Margin = 75;
+                    Screen.Game.AddObject(obj4);
                     container.AddChild(obj4);
                     container.Children[i, y] = obj4;
-                    Screen.Game.AddObject(obj4);
+                    
                 }
             }
 
