@@ -21,18 +21,17 @@ namespace Water.Containers
 
         public override void CalculateChildrenPositions()
         {
-            var currentX = 0;
-            var currentY = 0;
+            var itemWidth = ActualPosition.Width / Children.GetLength(0);
+            var itemHeight = ActualPosition.Height / Children.GetLength(1);
+
             for (int x = 0; x < Children.GetLength(0); x++)
             {
                 for (int y = 0; y < Children.GetLength(1); y++)
                 {
                     var child = Children[x, y];
-                    var newX = child.RelativePosition.Width * x;
-                    var newY = child.RelativePosition.Width * y;
-                    child.ActualPosition = new(newX, newY, child.RelativePosition.Width, child.RelativePosition.Height);
-                    currentX += child.RelativePosition.Width;
-                    currentY += child.RelativePosition.Height;
+                    var newX = itemWidth * x;
+                    var newY = itemHeight * y;
+                    child.ActualPosition = new(Parent.ActualPosition.X + newX, Parent.ActualPosition.Y + newY, itemWidth, itemHeight);
                     child.CalculateChildrenPositions();
                 }
             }
