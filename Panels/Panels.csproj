@@ -10,6 +10,11 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Assets\GENJYUUGOTHICX-BOLD.TTF" />
+    <None Remove="Assets\GENJYUUGOTHICX-MEDIUM.TTF" />
+    <None Remove="Assets\IBMPLEXSANS-BOLD.TTF" />
+    <None Remove="Assets\IBMPLEXSANS-MEDIUM.TTF" />
+    <None Remove="Assets\IBMPLEXSANS-SEMIBOLD.TTF" />
     <None Remove="Icon.ico" />
     <None Remove="Icon.bmp" />
   </ItemGroup>
@@ -36,7 +41,6 @@
     <ProjectReference Include="..\Water\Water.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\" />
     <Folder Include="Screens\" />
   </ItemGroup>
 </Project>

@@ -1,9 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SpriteFontPlus;
+using System;
+using System.IO;
 using Water;
 using Water.Graphics;
 using Water.Graphics.Containers;
+using Water.Graphics.Controls;
 
 namespace Panels
 {
@@ -13,32 +17,12 @@ namespace Panels
 
         public PanelGame() : base()
         {
-            var obj = new Sprite(new(10, 10, 250, 50), "Assets/Gameplay/Player.png");
-            obj.Tag = "Object 1";
-            obj.Layout = Layout.Fill;
-            obj.Margin = 10;
-            Screen.Game.AddObject(obj);
-            Screen.AddChild(obj);
-            var obj2 = new Sprite(new(10, 50, 50, 50), "Assets/Gameplay/Enemy.png");
-            obj2.Tag = "Object 2";
-            obj2.Layout = Layout.Fill;
-            obj2.Margin = 75;
-            obj.Game.AddObject(obj2);
-            obj.AddChild(obj2);
-            var obj3 = new Sprite(new(10, 10, 256, 500), "Assets/[ Pink Dreams ].png");
-            obj3.Tag = "Object 3";
-            obj3.Layout = Layout.DockBottom;
-            obj3.Margin = 10;
-            Screen.Game.AddObject(obj3);
-            obj2.AddChild(obj3);
-
-
             var xcontainer = new StackContainer();
             xcontainer.RelativePosition = new(0, 0, 100, 100);
             xcontainer.Layout = Layout.Fill;
             xcontainer.Margin = 10;
             xcontainer.Orientation = Orientation.Vertical;
-            obj3.AddChild(xcontainer);
+            Screen.AddChild(xcontainer);
             for (int i = 0; i <= 4; i++)
             {
                 var objx = new Sprite(new(10, 10, 256, 144), "Assets/[ Pink Dreams ].png");
@@ -56,7 +40,6 @@ namespace Panels
                     for (int y = 0; y <= 4; y++)
                     {
                         var obj4 = new Sprite(new(100, 0, 250, 250), @"C:\Users\poohw\OneDrive\Assets\blobsadcat.png");
-                        obj4.Tag = $"Object 4 {s},{y}";
                         obj4.Layout = Layout.Fill;
                         obj4.Margin = 75;
                         Screen.Game.AddObject(obj4);
@@ -66,6 +49,32 @@ namespace Panels
                     }
                 }
             }
+
+            var obj = new Sprite(new(10, 10, 250, 50), "Assets/Gameplay/Player.png");
+            obj.Layout = Layout.Fill;
+            obj.Margin = 75;
+            Screen.Game.AddObject(obj);
+            Screen.AddChild(obj);
+            var obj2 = new Sprite(new(10, 50, 50, 50), "Assets/Gameplay/Enemy.png");
+            obj2.Layout = Layout.Fill;
+            obj2.Margin = 75;
+            obj.Game.AddObject(obj2);
+            obj.AddChild(obj2);
+            var obj3 = new Sprite(new(10, 10, 256, 250), "Assets/[ Pink Dreams ].png");
+            obj3.Layout = Layout.DockRight;
+            obj3.Margin = 10;
+            Screen.Game.AddObject(obj3);
+            obj2.AddChild(obj3);
+
+            var font = DynamicSpriteFont.FromTtf(File.ReadAllBytes("Assets/GENJYUUGOTHICX-MEDIUM.TTF"), 25);
+            var text = new TextBlock(new(10, 10, 300, 300), font, $"The quick brown fox jumps over the lazy dog|nThe Water \"engine\"|nPOWERED BY MONOGAME", Color.Black);
+            text.Layout = Layout.Fill;
+            text.TextWrapping = TextWrapMode.WordWrap;
+            text.TextAlignment = TextAlignment.Right;
+            Screen.Game.AddObject(text);
+            obj3.AddChild(text);
+
+            
         }
 
         protected override void Initialize()
