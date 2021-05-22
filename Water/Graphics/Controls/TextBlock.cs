@@ -36,30 +36,24 @@ namespace Water.Graphics.Controls
                 TextWrapMode.WordWrap => WordWrap(font, text, ActualPosition.Width),
                 TextWrapMode.None or _ => text
             };
-            var textSize = font.MeasureString(text);
             var pos = new Vector2(ActualPosition.X, ActualPosition.Y);
 
-            //if (TextAlignment == TextAlignment.Left) spriteBatch.DrawString(font, text, pos, color);
-            //else
-            //{
-                var lines = text.Split(LineSeparator);
-                var width = font.MeasureString(finalText).X;
-                int i = 0;
-                foreach (var line in lines)
+            var lines = finalText.Split(LineSeparator);
+            foreach (var line in lines)
+            {
+                if (TextAlignment != TextAlignment.Left)
                 {
-                    if (i == 0)
-                    {
-                        var m = font.MeasureString(line.Trim());
-                        if (TextAlignment == TextAlignment.Right)
-                            pos.X += (width - m.X);
-                        else if (TextAlignment == TextAlignment.Center)
-                            pos.X += (width - m.X) / 2;
-                    }
-                    spriteBatch.DrawString(font, line, pos, color);
-                    pos.Y += 20;
-                    i++;
+                    pos.X = ActualPosition.X;
+                    var m = font.MeasureString(line.Trim());
+                    if (TextAlignment == TextAlignment.Right)
+                        pos.X += ActualPosition.Right - m.X;
+                    else if (TextAlignment == TextAlignment.Center)
+                        pos.X += (ActualPosition.Width - m.X) / 2;
                 }
-            //}
+                spriteBatch.DrawString(font, line, pos, color);
+                   
+                pos.Y += 20;
+            }
         }
 
         public override void Initialize()
