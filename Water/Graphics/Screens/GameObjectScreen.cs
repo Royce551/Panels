@@ -10,34 +10,31 @@ namespace Water.Graphics.Screens
 {
     public class GameObjectScreen : GameObject
     {
-        public Stack<Screen> Screens { get; } = new();
+        public List<Screen> Screens { get; } = new();
         public bool HasScreens { get => Screens.Count > 0; }
 
         public void AddScreen(Screen screen)
         {
-            Screens.Push(screen);
+            Screens.Add(screen);
         }
 
-        public void RemoveScreen()
+        public void RemoveScreen(Screen screen)
         {
-            Screens.Pop();
+            Screens.Remove(screen);
         }
         public void RemoveAllScreens()
         {
-            while (HasScreens)
-                RemoveScreen();
-
+            Screens.Clear();
         }
 
         public override void AddChild(IContainer child)
         {
             base.AddChild(child);
-            /*CalculateChildrenPositions();*/ // TODO: if stuff doesn't work, look here first
+            CalculateChildrenPositions();
         }
 
         public override void Initialize()
         {
-
         }
 
         public void ChangeScreen(Screen screen)
@@ -49,12 +46,14 @@ namespace Water.Graphics.Screens
         public override void Update(GameTime gameTime)
         {
             if (!HasScreens) return;
-            Screens.Peek().Update(gameTime);
+            foreach (var screen in Screens)
+                screen.Update(gameTime);
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
             if (!HasScreens) return;
-            Screens.Peek().Draw(gameTime, spriteBatch, graphicsDevice);
+            foreach (var screen in Screens)
+                screen.Draw(gameTime, spriteBatch, graphicsDevice);
         }
 
         public void UpdateScreenSize(Rectangle newSize)

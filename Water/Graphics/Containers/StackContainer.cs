@@ -15,6 +15,8 @@ namespace Water.Graphics.Containers
         public override void CalculateChildrenPositions()
         {
             int offset;
+            if (Children.Count <= 0) return;
+
             if (Orientation == Orientation.Horizontal) offset = ActualPosition.Width / Children.Count;
             else offset = ActualPosition.Height / Children.Count;
 
