@@ -25,7 +25,7 @@ namespace Water.Graphics.Controls
 
         public override void Initialize()
         {
-            sprite = Game.Textures.GetTexture(path);
+            sprite = Game.Textures.Get(path);
         }
 
         public override void Update(GameTime gameTime)

@@ -16,7 +16,7 @@ namespace Water.Graphics
 
         public void AddTexture(string path) => Cache.Add(path, Texture2D.FromFile(graphicsDevice, path));
 
-        public Texture2D GetTexture(string path)
+        public Texture2D Get(string path)
         {
             Texture2D texture;
             if (!Cache.TryGetValue(path, out texture))

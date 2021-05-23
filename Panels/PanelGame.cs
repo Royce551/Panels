@@ -72,28 +72,28 @@ namespace Panels
             container.Orientation = Orientation.Vertical;
             Screen.AddChild(container);
 
-            var font = DynamicSpriteFont.FromTtf(File.ReadAllBytes("Assets/GENJYUUGOTHICX-MEDIUM.TTF"), 25);
-            //var text1 = new TextBlock(new(10, 10, 600, 600), font, $"The quick brown fox jumps over the lazy dog and word wraps|nNew line", Color.White);
-            //text1.Layout = Layout.Fill;
-            //text1.TextWrapping = TextWrapMode.WordWrap;
-            //text1.HorizontalTextAlignment = HorizontalTextAlignment.Left;
-            //Screen.Game.AddObject(text1);
-            //container.AddChild(text1);
+            var font = Screen.Game.Fonts.Get("Assets/GENJYUUGOTHICX-MEDIUM.TTF", 25);
+            var text1 = new TextBlock(new(10, 10, 600, 600), font, $"The quick brown fox jumps over the lazy dog and word wraps|nNew line", Color.White);
+            text1.Layout = Layout.Fill;
+            text1.TextWrapping = TextWrapMode.WordWrap;
+            text1.HorizontalTextAlignment = HorizontalTextAlignment.Left;
+            Screen.Game.AddObject(text1);
+            container.AddChild(text1);
 
-            //var text2 = new TextBlock(new(10, 10, 600, 600), font, $"The quick brown fox jumps over the lazy dog and letter wraps", Color.White);
-            //text2.Layout = Layout.Fill;
-            //text2.TextWrapping = TextWrapMode.LetterWrap;
-            //text2.HorizontalTextAlignment = HorizontalTextAlignment.Left;
-            //Screen.Game.AddObject(text2);
-            //container.AddChild(text2);
+            var text2 = new TextBlock(new(10, 10, 600, 600), font, $"The quick brown fox jumps over the lazy dog and letter wraps", Color.White);
+            text2.Layout = Layout.Fill;
+            text2.TextWrapping = TextWrapMode.LetterWrap;
+            text2.HorizontalTextAlignment = HorizontalTextAlignment.Left;
+            Screen.Game.AddObject(text2);
+            container.AddChild(text2);
 
-            //var text3 = new TextBlock(new(10, 10, 600, 600), font, $"The quick brown fox jumps over the lazy dog and is center aligned.", Color.White);
-            //text3.Layout = Layout.Fill;
-            //text3.TextWrapping = TextWrapMode.LetterWrap;
-            //text3.HorizontalTextAlignment = HorizontalTextAlignment.Center;
-            //text3.VerticalTextAlignment = VerticalTextAlignment.Center;
-            //Screen.Game.AddObject(text3);
-            //container.AddChild(text3);
+            var text3 = new TextBlock(new(10, 10, 600, 600), font, $"The quick brown fox jumps over the lazy dog and is center aligned.", Color.White);
+            text3.Layout = Layout.Fill;
+            text3.TextWrapping = TextWrapMode.LetterWrap;
+            text3.HorizontalTextAlignment = HorizontalTextAlignment.Center;
+            text3.VerticalTextAlignment = VerticalTextAlignment.Center;
+            Screen.Game.AddObject(text3);
+            container.AddChild(text3);
 
             var text4 = new TextBlock(new(10, 10, 600, 600), font, $"The quick brown fox jumps over the lazy dog and is bottom aligned.|n1|n2|n3", Color.White);
             text4.Layout = Layout.Fill;
