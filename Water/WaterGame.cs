@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Water.Graphics;
 using Water.Graphics.Screens;
+using Water.Screens;
 
 namespace Water
 {
@@ -18,9 +19,6 @@ namespace Water
         private SpriteBatch _spriteBatch;
 
         private GameObjectManager gameObjectManager;
-        private double updatesPerSecond;
-        private double drawsPerSecond;
-
         public WaterGame()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -28,8 +26,8 @@ namespace Water
             _graphics.PreferredBackBufferHeight = 900;
             _graphics.SynchronizeWithVerticalRetrace = false;
             Window.AllowUserResizing = true;
-            IsFixedTimeStep = true;
-            TargetElapsedTime = TimeSpan.FromMilliseconds(8.33);
+            IsFixedTimeStep = false;
+            //TargetElapsedTime = TimeSpan.FromMilliseconds(8.33);
             _graphics.ApplyChanges();
             Screen = new();
             Screen.RelativePosition = GraphicsDevice.Viewport.Bounds;
@@ -41,6 +39,9 @@ namespace Water
             Screen.UpdateScreenSize(new(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height));
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+#if DEBUG
+            Screen.AddScreen(new DebugOverlay(gameObjectManager, Screen));
+#endif
         }
 
         private void Window_ClientSizeChanged(object sender, EventArgs e)
@@ -65,15 +66,11 @@ namespace Water
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+                
 
             // TODO: Add your update logic here
             gameObjectManager.Update(gameTime);
-#if DEBUG
-            updatesPerSecond = 1 / gameTime.ElapsedGameTime.TotalSeconds;
-            Window.Title = $"{gameObjectManager.AllObjects.Count} objects | {Math.Round(updatesPerSecond, 3)}updates ps | {Math.Round(drawsPerSecond, 3)}draws ps - Water Engine running {ProjectName ?? "itself"}";
-#else
             Window.Title = ProjectName ?? "Water Engine";
-#endif
             base.Update(gameTime);
         }
 
@@ -85,9 +82,6 @@ namespace Water
             _spriteBatch.Begin();
             gameObjectManager.Draw(gameTime, _spriteBatch, GraphicsDevice);
             _spriteBatch.End();
-#if DEBUG
-            drawsPerSecond = 1 / gameTime.ElapsedGameTime.TotalSeconds;
-#endif
             base.Draw(gameTime);
         }
     }

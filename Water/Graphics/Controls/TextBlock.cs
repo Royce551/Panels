@@ -14,11 +14,11 @@ namespace Water.Graphics.Controls
         public TextWrapMode TextWrapping;
         public HorizontalTextAlignment HorizontalTextAlignment;
         public VerticalTextAlignment VerticalTextAlignment;
+        public string Text { get; set; }
         public const string LineSeparator = "|n";
 
         private DynamicSpriteFont font;
         private Color color;
-        private string text;
 
         // code taken from https://github.com/redteam-os/thundershock/blob/master/src/Thundershock/Gui/Elements/TextBlock.cs
 
@@ -27,16 +27,16 @@ namespace Water.Graphics.Controls
             RelativePosition = relativePosition;
             this.color = color;
             this.font = font;
-            this.text = text;
+            Text = text;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, GraphicsDevice graphicsDevice)
         {
             var finalText = TextWrapping switch // TODO: don't calculate this EVERY frame
             {
-                TextWrapMode.LetterWrap => LetterWrap(font, text, ActualPosition.Width),
-                TextWrapMode.WordWrap => WordWrap(font, text, ActualPosition.Width),
-                TextWrapMode.None or _ => text
+                TextWrapMode.LetterWrap => LetterWrap(font, Text, ActualPosition.Width),
+                TextWrapMode.WordWrap => WordWrap(font, Text, ActualPosition.Width),
+                TextWrapMode.None or _ => Text
             };
             var pos = new Vector2(ActualPosition.X, ActualPosition.Y);
 
