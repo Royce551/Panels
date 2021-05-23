@@ -11,14 +11,16 @@ namespace Water.Graphics.Controls
 {
     public class TextBlock : GameObject
     {
-
         public TextWrapMode TextWrapping;
-        public TextAlignment TextAlignment;
+        public HorizontalTextAlignment HorizontalTextAlignment;
+        public VerticalTextAlignment VerticalTextAlignment;
         public const string LineSeparator = "|n";
 
         private DynamicSpriteFont font;
         private Color color;
         private string text;
+
+        // code taken from https://github.com/redteam-os/thundershock/blob/master/src/Thundershock/Gui/Elements/TextBlock.cs
 
         public TextBlock(Rectangle relativePosition, DynamicSpriteFont font, string text, Color color)
         {
@@ -39,20 +41,30 @@ namespace Water.Graphics.Controls
             var pos = new Vector2(ActualPosition.X, ActualPosition.Y);
 
             var lines = finalText.Split(LineSeparator);
+            int i = 0;
             foreach (var line in lines)
             {
-                if (TextAlignment != TextAlignment.Left)
+                pos.X = ActualPosition.X;
+                //pos.Y = ActualPosition.Y + (20 * i);
+                var m = font.MeasureString(line.Trim());
+                if (HorizontalTextAlignment != HorizontalTextAlignment.Left)
                 {
-                    pos.X = ActualPosition.X;
-                    var m = font.MeasureString(line.Trim());
-                    if (TextAlignment == TextAlignment.Right)
+                    if (HorizontalTextAlignment == HorizontalTextAlignment.Right)
                         pos.X += ActualPosition.Right - m.X;
-                    else if (TextAlignment == TextAlignment.Center)
+                    else if (HorizontalTextAlignment == HorizontalTextAlignment.Center)
                         pos.X += (ActualPosition.Width - m.X) / 2;
                 }
+                if (VerticalTextAlignment != VerticalTextAlignment.Top)
+                {
+                    if (VerticalTextAlignment == VerticalTextAlignment.Bottom)
+                        pos.Y = (ActualPosition.Bottom - (m.Y * ((lines.Length - i) + 1)));
+                    else if (VerticalTextAlignment == VerticalTextAlignment.Center)
+                        pos.Y += (ActualPosition.Height - m.Y) / 2;
+                }
                 spriteBatch.DrawString(font, line, pos, color);
-                   
-                pos.Y += 20;
+
+                pos.Y += 20; // space between lines TODO: base this off of the font or make this configurable
+                i++;
             }
         }
 
@@ -66,7 +78,7 @@ namespace Water.Graphics.Controls
           
         }
 
-        // code taken from https://github.com/redteam-os/thundershock/blob/master/src/Thundershock/Gui/Elements/TextBlock.cs
+        
         private string LetterWrap(DynamicSpriteFont font, string text, float wrapWidth)
         {
             if (wrapWidth <= 0)
@@ -167,10 +179,16 @@ namespace Water.Graphics.Controls
         LetterWrap,
         WordWrap
     }
-    public enum TextAlignment
+    public enum HorizontalTextAlignment
     {
         Left,
         Center,
         Right
+    }
+    public enum VerticalTextAlignment
+    {
+        Top,
+        Center,
+        Bottom
     }
 }
