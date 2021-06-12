@@ -40,7 +40,7 @@ namespace Water
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 #if DEBUG
-            Screen.AddScreen(new DebugOverlay(gameObjectManager, Screen));
+            Screen.AddScreen(new DebugOverlay(gameObjectManager, Screen, Window));
 #endif
         }
 
