@@ -24,15 +24,17 @@ namespace Water.Graphics
             Fonts = new FontCache();
         }
 
-        public void AddObject(GameObject obj)
+        public GameObject AddObject(GameObject obj)
         {
             obj.Game = this;
             obj.Initialize();
             objectsToAdd.Add(obj);
+            return obj;
         }
-        public void RemoveObject(GameObject obj)
+        public GameObject RemoveObject(GameObject obj)
         {
             objectsToRemove.Add(obj);
+            return obj;
         }
         public void Update(GameTime gameTime)
         {

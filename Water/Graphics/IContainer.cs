@@ -35,6 +35,7 @@ namespace Water.Graphics
         DockTop,
         DockRight,
         DockBottom,
-        Fill
+        Fill,
+        AspectRatioMaintainingFill
     }
 }

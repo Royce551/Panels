@@ -30,7 +30,6 @@ namespace Water.Graphics
         {
             foreach (var child in Children)
             {
-                
                 if (this is GameObjectScreen)
                         Console.WriteLine("it's true!");
                 var parentPosition = child.Parent?.ActualPosition ?? RelativePosition; // can be null for the root object
@@ -106,6 +105,15 @@ namespace Water.Graphics
                         parentPosition.Width - (child.Margin * 2),
                         parentPosition.Height - (child.Margin * 2)
                     ),
+                    Layout.AspectRatioMaintainingFill => new
+                    (
+                        new Point
+                        (
+                            parentPosition.X + child.Margin,
+                            parentPosition.Y + child.Margin
+                        ),
+                        CalculateAspectRatioMaintainingFill(parentPosition, child.RelativePosition)
+                    ),
                     Layout.DockLeft => new
                     (
                         parentPosition.X + child.Margin,
@@ -147,5 +155,16 @@ namespace Water.Graphics
                 child.CalculateChildrenPositions();
             }
         } 
+
+        private Point CalculateAspectRatioMaintainingFill(Rectangle parentPosition, Rectangle childPosition)
+        {
+            float scaleX = (float)(MathF.Abs(childPosition.Width) < 10.0 * 2.2204460492503131e-016 ? 0.0 : parentPosition.Width / childPosition.Width);
+            float scaleY = (float)(MathF.Abs(childPosition.Height) < 10.0 * 2.2204460492503131e-016 ? 0.0 : parentPosition.Height / childPosition.Height);
+
+            float maxScale = scaleX > scaleY ? scaleX : scaleY;
+            scaleX = scaleY = maxScale;
+
+            return new((int)(childPosition.Width * scaleX), (int)(childPosition.Height * scaleY));
+        }
     }
 }
