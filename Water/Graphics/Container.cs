@@ -158,13 +158,14 @@ namespace Water.Graphics
 
         private Point CalculateAspectRatioMaintainingFill(Rectangle parentPosition, Rectangle childPosition)
         {
-            float scaleX = (float)(MathF.Abs(childPosition.Width) < 10.0 * 2.2204460492503131e-016 ? 0.0 : parentPosition.Width / childPosition.Width);
-            float scaleY = (float)(MathF.Abs(childPosition.Height) < 10.0 * 2.2204460492503131e-016 ? 0.0 : parentPosition.Height / childPosition.Height);
+            float parentAspectRatio = parentPosition.Width / parentPosition.Height;
+            float childAspectRatio = childPosition.Width / childPosition.Height;
 
-            float maxScale = scaleX > scaleY ? scaleX : scaleY;
-            scaleX = scaleY = maxScale;
+            float scalingFactor;
+            if (parentAspectRatio > childAspectRatio) scalingFactor = parentPosition.Width / childPosition.Width;
+            else scalingFactor = parentPosition.Height / childPosition.Height;
 
-            return new((int)(childPosition.Width * scaleX), (int)(childPosition.Height * scaleY));
+            return new((int)(childPosition.Width * scalingFactor), (int)(childPosition.Height * scalingFactor));
         }
     }
 }

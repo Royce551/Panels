@@ -18,11 +18,12 @@ namespace UntitledDanmakuGame.Screens.Play
 
         public PlayScreen(GameObjectManager game, GameObjectScreen screen, GameWindow window)
         {
-            screen.AddChild(game.AddObject(new Sprite(new(0, 0, 0, 0), "Assets/UI/[ Pink Dreams ].png")
+            var background = new Sprite(new(0, 0, 0, 0), "Assets/UI/[ Pink Dreams ].png")
             {
                 Layout = Layout.Fill
-            }));
-            screen.AddChild(game.AddObject(new Sprite(new(282, 0, 640, 480), "Assets/UI/playfieldDefaultBackground.png")
+            };
+            screen.AddChild(game.AddObject(background));
+            background.AddChild(game.AddObject(new Sprite(new(0, 0, 0, 0), "Assets/UI/playfieldDefaultBackground.png")
             {
                 Layout = Layout.AspectRatioMaintainingFill
             }));
